@@ -1,0 +1,71 @@
+body {
+    background-color: rgb(39, 29, 29);
+    text-align: center;
+    color: white;
+}
+
+input {
+    padding: 10px;   
+}
+
+h1 {
+    text-align: center;
+    font-size: 32px;
+}
+
+div {
+    font-size: 25px;
+    padding: 10px;
+}
+
+button {
+    padding: 10px;
+    background-color: green;
+}
+
+table {
+    margin: auto;
+    border-collapse: collapse;
+    border: 2px solid green;
+    font-size: 25px;
+}
+
+TD, TH {
+    padding: 10px;
+    border: 1px solid rgb(30, 179, 50);
+    text-align: left;
+}
+
+input {
+    padding: 10px;
+    border-radius: 20px;
+}
+
+header {
+    font-size: 50px;
+    color: red;
+    background-color: salmon;
+    border-radius: 20px;
+}
+
+.alert {
+    font-size: 15px;
+    background-color: salmon;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    max-width: 270px;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.caution {
+    font-size: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.largeinput {
+    width: 500px;
+    height: 300px;
+}
