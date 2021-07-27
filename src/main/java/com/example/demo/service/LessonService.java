@@ -20,10 +20,6 @@ public class LessonService {
         this.lessonRepository = lessonRepository;
     }
 
-   /* public Optional<Lesson> findById(Long id) {
-        return lessonRepository.findById(id);
-    }*/
-
     public List<Lesson> findAllById(Long id) {
         return lessonRepository.findAllById(id);
     }

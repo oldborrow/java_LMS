@@ -58,8 +58,4 @@ public class UserService {
                 () -> new NotFoundException("User not found")
         );
     }
-
-    /*public Object getUsersOfCourse(Optional<Course> course) {
-
-    }*/
 }

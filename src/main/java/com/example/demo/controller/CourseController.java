@@ -38,7 +38,7 @@ public class CourseController {
     @RequestMapping("/{id}")
     public String courseForm(Model model, @PathVariable("id") Long id) {
         model.addAttribute("course", courseService.findById(id));
-        model.addAttribute("lessons", new LessonDto(id));
+        model.addAttribute("lessons", lessonService.findAllForLessonIdWithoutText(id));
         return "course_form";
     }
 

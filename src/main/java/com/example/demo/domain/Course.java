@@ -69,13 +69,16 @@ public class Course {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return Objects.equals(id, course.id) && Objects.equals(author, course.author) && Objects.equals(title, course.title) && Objects.equals(lessons, course.lessons) && Objects.equals(users, course.users);
+        return Objects.equals(id, course.id) &&
+                Objects.equals(author, course.author) &&
+                Objects.equals(title, course.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, author, title, lessons, users);
+        return Objects.hash(id, author, title);
     }
+
 
     public void setAuthor(String author) {
         this.author = author;
