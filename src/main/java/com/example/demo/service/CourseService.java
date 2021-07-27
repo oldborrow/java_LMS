@@ -1,11 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.controller.NotFoundException;
 import com.example.demo.dao.CourseRepository;
 import com.example.demo.domain.Course;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CourseService {
@@ -15,13 +16,12 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public void courseTable(Model model, String titlePrefix) {
-        model.addAttribute("courses", courseRepository.findByTitleWithPrefix(titlePrefix == null ? "" : titlePrefix));
+    public List<Course> findByTitle(String titlePrefix) {
+        return courseRepository.findByTitleLike(titlePrefix + "%");
     }
 
-    public void courseForm(Model model, Long id) {
-        model.addAttribute("course", courseRepository.findById(id)
-                .orElseThrow(NotFoundException::new));
+    public Course findById(Long id) {
+        return courseRepository.findById(id).get();
     }
 
     public void submitCourseForm(Course course, BindingResult bindingResult) {
@@ -29,6 +29,18 @@ public class CourseService {
     }
 
     public void deleteCourse(Long id) {
-        courseRepository.delete(id);
+        courseRepository.deleteById(id);
+    }
+
+    public Optional<Course> findById(long id) {
+        return courseRepository.findById(id);
+    }
+
+    public List<Course> findByTitleLike(String s) {
+        return courseRepository.findByTitleLike(s);
+    }
+
+    public void save(Course course) {
+        courseRepository.save(course);
     }
 }
