@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Course;
+import com.example.demo.dto.LessonDto;
 import com.example.demo.service.CourseService;
+import com.example.demo.service.LessonService;
+import com.example.demo.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,20 +19,26 @@ import javax.validation.Valid;
 public class CourseController {
 
     private final CourseService courseService;
+    private final UserService userService;
+    private final LessonService lessonService;
 
-    public CourseController(CourseService courseService) {
+
+    public CourseController(CourseService courseService, UserService userService, LessonService lessonService) {
         this.courseService = courseService;
+        this.userService = userService;
+        this.lessonService = lessonService;
     }
 
     @GetMapping
     public String courseTable(Model model, @RequestParam(name = "titlePrefix", required = false) String titlePrefix) {
-        courseService.courseTable(model, titlePrefix);
+        model.addAttribute("courses", courseService.findByTitleLike(titlePrefix == null ? "%" : titlePrefix + "%"));
         return "course_table";
     }
 
     @RequestMapping("/{id}")
     public String courseForm(Model model, @PathVariable("id") Long id) {
-        courseService.courseForm(model, id);
+        model.addAttribute("course", courseService.findById(id));
+        model.addAttribute("lessons", lessonService.findAllForLessonIdWithoutText(id));
         return "course_form";
     }
 

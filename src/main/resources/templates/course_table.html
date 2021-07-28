@@ -26,7 +26,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:each="course : ${courses}">
+  <tr th:unless="${courses.empty}" th:each="course : ${courses}">
     <td th:text="${course.id}">1</td>
     <td>
       <a th:text="${course.title}" th:href="@{/course/{id}(id = ${course.id})}">Course name</a>
@@ -37,6 +37,9 @@
         <button type="submit">Delete</button>
       </form>
     </td>
+  </tr>
+  <tr th:if="${courses.empty}" >
+    <td colspan="4">No data</td>
   </tr>
   </tbody>
 </table>
