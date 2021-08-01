@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -25,4 +26,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "left join u.courses c " +
             "where c.id = :courseId)")
     List<User> getUsersAssignedToCourse(@Param("courseId") long courseId);
+    Optional<User> findUserByUsername(String username);
 }

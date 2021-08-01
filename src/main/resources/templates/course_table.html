@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8">
   <title>EShop application</title>
@@ -33,7 +33,7 @@
     </td>
     <td th:text="${course.author}">Course author</td>
     <td>
-      <form th:method="delete" th:action="@{/course/{id}(id = ${course.id})}">
+      <form class="inline" sec:authorize="hasRole('ADMIN')" th:method="delete" th:action="@{/course/{id}(id = ${course.id})}">
         <button type="submit">Delete</button>
       </form>
     </td>
