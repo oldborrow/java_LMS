@@ -45,6 +45,7 @@ public class CourseController {
         return "course_table";
     }
 
+    @Secured("ROLE_STUDENT")
     @RequestMapping("/{id}")
     public String courseForm(Model model, @PathVariable("id") Long id) {
         model.addAttribute("course", courseService.findById(id));

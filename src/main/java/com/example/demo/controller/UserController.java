@@ -6,6 +6,7 @@ import com.example.demo.domain.User;
 import com.example.demo.dto.UserDto;
 import com.example.demo.service.RoleService;
 import com.example.demo.service.UserService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +34,7 @@ public class UserController {
         return roleService.findAll();
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping
     public String userForm(Model model, Principal principal) {
         if (principal != null) {
