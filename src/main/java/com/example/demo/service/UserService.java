@@ -40,9 +40,7 @@ public class UserService {
     }
 
     private List<UserDto> convertListToDto(List<User> list) {
-        return list.stream().map(u -> new UserDto(
-                u.getId(),
-                u.getUsername())).collect(Collectors.toList());
+        return list.stream().map(u -> DtoConverters.toUserDto(u)).collect(Collectors.toList());
     }
 
     private void signUser(Long id, Long courseId, boolean isDelete) {
@@ -73,13 +71,13 @@ public class UserService {
 
     public List<UserDto> findAll() {
         return userRepository.findAll().stream()
-                .map(usr -> new UserDto(usr.getId(), usr.getUsername(), "", usr.getRoles()))
+                .map(usr -> DtoConverters.toUserDto(usr))
                 .collect(Collectors.toList());
     }
 
     public Optional<UserDto> findById(long id) {
         return userRepository.findById(id)
-                .map(usr -> new UserDto(usr.getId(), usr.getUsername(), "", usr.getRoles()));
+                .map(usr -> DtoConverters.toUserDto(usr));
     }
 
     public void deleteById(long id) {

@@ -4,6 +4,7 @@ import com.example.demo.domain.Course;
 import com.example.demo.dto.LessonDto;
 import com.example.demo.service.CourseService;
 import com.example.demo.service.LessonService;
+import com.example.demo.service.RolesStrings;
 import com.example.demo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,7 @@ public class CourseController {
         return "course_table";
     }
 
-    @Secured("ROLE_STUDENT")
+    @Secured(RolesStrings.STUDENT)
     @RequestMapping("/{id}")
     public String courseForm(Model model, @PathVariable("id") Long id) {
         model.addAttribute("course", courseService.findById(id));
@@ -68,7 +69,7 @@ public class CourseController {
         return "course_form";
     }
 
-    @Secured("ROLE_ADMIN")
+    @Secured(RolesStrings.ADMIN)
     @DeleteMapping("/{id}")
     public String deleteCourse(@PathVariable("id") Long id) {
         courseService.deleteCourse(id);
