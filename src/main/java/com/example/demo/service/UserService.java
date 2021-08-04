@@ -5,14 +5,19 @@ import com.example.demo.dao.UserRepository;
 import com.example.demo.domain.Course;
 import com.example.demo.domain.User;
 import com.example.demo.dto.UserDto;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 @Component
 public class UserService {
     private UserRepository userRepository;
     private CourseService courseService;
+
+    public UserService() {
+    }
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -35,9 +40,7 @@ public class UserService {
     }
 
     private List<UserDto> convertListToDto(List<User> list) {
-        return list.stream().map(u -> new UserDto(
-                u.getId(),
-                u.getUsername())).collect(Collectors.toList());
+        return list.stream().map(u -> DtoConverters.toUserDto(u)).collect(Collectors.toList());
     }
 
     private void signUser(Long id, Long courseId, boolean isDelete) {
@@ -58,4 +61,39 @@ public class UserService {
                 () -> new NotFoundException("User not found")
         );
     }
+
+    private PasswordEncoder encoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder encoder) {
+        this.userRepository = userRepository;
+        this.encoder = encoder;
+    }
+
+    public List<UserDto> findAll() {
+        return userRepository.findAll().stream()
+                .map(usr -> DtoConverters.toUserDto(usr))
+                .collect(Collectors.toList());
+    }
+
+    public Optional<UserDto> findById(long id) {
+        return userRepository.findById(id)
+                .map(usr -> DtoConverters.toUserDto(usr));
+    }
+
+    public void deleteById(long id) {
+        userRepository.deleteById(id);
+    }
+
+    public void save(UserDto userDto) {
+        userRepository.save(new User(userDto.getId(),
+                userDto.getUsername(),
+                encoder.encode(userDto.getPassword()),
+                userDto.getRoles()
+        ));
+    }
+
+    public User getUserByUsername(String name) {
+        return userRepository.findUserByUsername(name).get();
+    }
+
 }

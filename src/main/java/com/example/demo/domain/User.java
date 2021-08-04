@@ -15,8 +15,38 @@ public class User {
     @Column
     private String username;
 
+    @Column
+    private String password;
+
+    public User(Long id, String username, String encode, Set<Role> roles) {
+        this.id = id;
+        this.username = username;
+        this.password = encode;
+        this.roles = roles;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     @ManyToMany(mappedBy = "users")
     private Set<Course> courses;
+
+    @ManyToMany
+    private Set<Role> roles;
 
     public User() {
     }

@@ -1,12 +1,14 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="utf-8">
-  <title>Courses</title>
-  <link rel="stylesheet" th:href="@{/all.css}">
-</head>
-<header th:replace="fragments/header :: header"></header>
+<link rel="stylesheet" th:href="@{/all.css}">
+<head th:replace="fragments/head :: head"></head>
 <body>
-<h1>Course not found</h1>
+<header th:replace="fragments/header :: header"></header>
+
+<main class="container mt-3">
+  <p class="alert alert-danger" role="alert">
+    Course not found
+  </p>
+</main>
 </body>
 </html>
