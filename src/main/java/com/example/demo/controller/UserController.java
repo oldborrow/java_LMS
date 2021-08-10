@@ -30,21 +30,30 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping
+    public String userList(Model model, @RequestParam(name = "namePrefix", required = false) String namePrefix) {
+        model.addAttribute("users", userService.findByUsernameLike(namePrefix == null ? "%" : namePrefix + "%"));
+        model.addAttribute("activePage", "users");
+        return "find_user";
+    }
+
+    @GetMapping("/{id}")
+    public String userProfile(Model model, @PathVariable("id") Long id) {
+        UserDto userDto = userService.findById(id);
+        model.addAttribute("user", userDto);
+        return "user_form";
+    }
+
+    @GetMapping("/new")
+    public String newUser(Model model) {
+        model.addAttribute("user", new UserDto());
+        return "user_form";
+    }
+
     @ModelAttribute("roles")
     public List<Role> rolesAttribute() {
         return roleService.findAll();
     }
-
-    @Secured(RolesStrings.ADMIN)
-    @GetMapping
-    public String userForm(Model model, Principal principal) {
-        if (principal != null) {
-            User currentUser = userService.getUserByUsername(principal.getName());
-            return String.format("redirect:/user/%d", currentUser.getId());
-        }
-        return "redirect:/login";
-    }
-
 
     @PostMapping
     public String submitUserForm(@Valid @ModelAttribute("user") UserDto user,
@@ -54,6 +63,13 @@ public class UserController {
         }
 
         userService.save(user);
-        return "redirect:/user";
+        return "redirect:/admin/user";
     }
+
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable("id") Long id) {
+        userService.deleteById(id);
+        return "redirect:/admin/user";
+    }
+
 }

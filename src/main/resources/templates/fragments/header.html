@@ -7,16 +7,20 @@
         <a th:href="@{/course}">Courses</a>
     </span>
     <span th:classappend="${activePage == 'users'} ? active">
-        <a th:href="@{/user}">User</a>
+        <a th:href="@{/admin/user}">User</a>
+    </span>
+    <span th:classappend="${activePage == 'lessons'} ? active">
+        <a th:href="@{/lesson}">Lesson</a>
     </span>
     <a class="float-right" sec:authorize="!isAuthenticated()" th:href="@{/login}">
         Login
     </a>
-    <form class="float-right" th:method="post" th:action="@{/logout}">
+    <form class="float-right" th:method="post" sec:authorize="isAuthenticated()" th:action="@{/logout}">
         <button>
             Logout <span sec:authentication="principal.username">Username</span>
         </button>
     </form>
+
 </header>
 
 </html>

@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Course;
-import com.example.demo.dto.LessonDto;
 import com.example.demo.service.CourseService;
 import com.example.demo.service.LessonService;
 import com.example.demo.service.RolesStrings;
@@ -27,13 +26,11 @@ public class CourseController {
     private static final Logger logger = LoggerFactory.getLogger(CourseController.class);
 
     private final CourseService courseService;
-    private final UserService userService;
     private final LessonService lessonService;
 
 
     public CourseController(CourseService courseService, UserService userService, LessonService lessonService) {
         this.courseService = courseService;
-        this.userService = userService;
         this.lessonService = lessonService;
     }
 
@@ -46,7 +43,6 @@ public class CourseController {
         return "course_table";
     }
 
-    @Secured(RolesStrings.STUDENT)
     @RequestMapping("/{id}")
     public String courseForm(Model model, @PathVariable("id") Long id) {
         model.addAttribute("course", courseService.findById(id));

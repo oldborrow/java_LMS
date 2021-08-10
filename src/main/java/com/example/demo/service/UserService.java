@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.controller.NotFoundException;
 import com.example.demo.dao.UserRepository;
 import com.example.demo.domain.Course;
+import com.example.demo.domain.Role;
 import com.example.demo.domain.User;
 import com.example.demo.dto.UserDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,11 +11,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 @Component
 public class UserService {
     private UserRepository userRepository;
     private CourseService courseService;
+    private RoleService roleService;
 
     public UserService() {
     }
@@ -75,9 +78,10 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<UserDto> findById(long id) {
+    public UserDto findById(long id) {
         return userRepository.findById(id)
-                .map(usr -> DtoConverters.toUserDto(usr));
+                .map(usr -> DtoConverters.toUserDto(usr))
+                .orElseThrow(() -> new NotFoundException("User not found"));
     }
 
     public void deleteById(long id) {
@@ -95,5 +99,11 @@ public class UserService {
     public User getUserByUsername(String name) {
         return userRepository.findUserByUsername(name).get();
     }
+
+    public Object findByUsernameLike(String s) {
+        return convertListToDto(userRepository.findByUsernameLike(s));
+    }
+
+
 
 }

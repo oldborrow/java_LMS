@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" th:href="@{/all.css}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,8 +9,7 @@
 <div>
     <label for="password">Password</label>
     <input type="password" id="password" th:field="*{password}">
-    <small class="validation-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password shouldn't be
-        empty</small>
+    <small class="validation-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password shouldn't be empty</small>
 </div>
 <div class="form-group">
     <label for="roles">Roles</label>
