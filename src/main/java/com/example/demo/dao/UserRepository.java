@@ -27,4 +27,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "where c.id = :courseId)")
     List<User> getUsersAssignedToCourse(@Param("courseId") long courseId);
     Optional<User> findUserByUsername(String username);
+
+    List<User> findByUsernameLike(String s);
 }
